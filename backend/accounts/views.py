@@ -9,13 +9,17 @@ logger = logging.getLogger(__name__)
 class SignupView(APIView):
     def post(self, request):
         try:
+            logger.info(f"Signup request data: {request.data}")
             serializer = SignupSerializer(data=request.data)
             if serializer.is_valid():
+                logger.info("Serializer is valid, saving...")
                 serializer.save()
+                logger.info("Signup successful")
                 return Response({'message': 'Signup successful. Check your email for verification code.'}, status=status.HTTP_201_CREATED)
+            logger.warning(f"Serializer errors: {serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            print(f"Signup error: {str(e)}")
+            logger.error(f"Signup error: {str(e)}", exc_info=True)
             return Response({'error': 'Internal server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class EmailVerificationView(APIView):
