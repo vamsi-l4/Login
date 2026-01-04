@@ -16,8 +16,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def api_root(request):
+    return JsonResponse({
+        'message': 'Login API',
+        'version': '1.0',
+        'endpoints': [
+            '/api/accounts/signup/',
+            '/api/accounts/login/',
+            '/api/accounts/verify-email/',
+            '/admin/'
+        ]
+    })
+
+def favicon(request):
+    # Return empty response for favicon requests
+    from django.http import HttpResponse
+    return HttpResponse(status=204)
 
 urlpatterns = [
+    path('', api_root, name='api-root'),
+    path('favicon.ico', favicon, name='favicon'),
     path('admin/', admin.site.urls),
     path('api/accounts/', include('accounts.urls')),
 ]
