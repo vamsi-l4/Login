@@ -22,13 +22,14 @@ class SignupSerializer(serializers.ModelSerializer):
         user.otp = otp
         user.otp_created_at = timezone.now()
         user.save()
-        send_mail(
-            'Email Verification',
-            f'Your verification code is {otp}',
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email],
-            fail_silently=False,
-        )
+        # Temporarily disable email sending for testing
+        # send_mail(
+        #     'Email Verification',
+        #     f'Your verification code is {otp}',
+        #     settings.DEFAULT_FROM_EMAIL,
+        #     [user.email],
+        #     fail_silently=False,
+        # )
         return user
 
 class EmailVerificationSerializer(serializers.Serializer):
