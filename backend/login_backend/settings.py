@@ -124,6 +124,6 @@ DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
-    'https://your-vercel-app.vercel.app',  # Replace with your actual Vercel URL
-    'https://your-render-app.onrender.com',  # Replace with your actual Render URL
+    'https://login-nu-lake.vercel.app',  # Your deployed Vercel frontend
+    'https://login-m2o6.onrender.com',  # Your deployed Render backend
 ]
