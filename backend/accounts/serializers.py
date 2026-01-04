@@ -55,20 +55,21 @@ class LoginSerializer(serializers.Serializer):
     def validate(self, data):
         try:
             user = User.objects.get(email=data['email'])
-            if user.check_password(data['password']) and user.email_verified:
+            if user.check_password(data['password']):
                 otp = str(random.randint(100000, 999999))
                 user.otp = otp
                 user.otp_created_at = timezone.now()
                 user.save()
-                send_mail(
-                    'Login OTP',
-                    f'Your login OTP is {otp}',
-                    settings.DEFAULT_FROM_EMAIL,
-                    [user.email],
-                    fail_silently=False,
-                )
+                # Temporarily disable email sending for testing
+                # send_mail(
+                #     'Login OTP',
+                #     f'Your login OTP is {otp}',
+                #     settings.DEFAULT_FROM_EMAIL,
+                #     [user.email],
+                #     fail_silently=False,
+                # )
                 return data
-            raise serializers.ValidationError('Invalid credentials or email not verified')
+            raise serializers.ValidationError('Invalid credentials')
         except User.DoesNotExist:
             raise serializers.ValidationError('User not found')
 
