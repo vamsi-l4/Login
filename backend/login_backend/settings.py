@@ -26,8 +26,15 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-zb*_a5z2*o4te_=_qqj%h!wkqo
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+AUTH_USER_MODEL = "accounts.User"
 
-ALLOWED_HOSTS = ['login-m2o6.onrender.com', 'localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = [
+    "login-m2o6.onrender.com",
+    "login-nu-lake.vercel.app",
+    "localhost",
+    "127.0.0.1",
+]
+
 
 
 # Application definition
