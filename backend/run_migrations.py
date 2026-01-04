@@ -16,8 +16,11 @@ django.setup()
 # Run migrations
 try:
     print("Starting database migrations...")
+    print(f"DATABASE_URL: {os.getenv('DATABASE_URL', 'Not set')}")
     execute_from_command_line(['manage.py', 'migrate', '--noinput'])
     print("Migrations completed successfully!")
 except Exception as e:
     print(f"Migration failed: {e}")
+    import traceback
+    traceback.print_exc()
     sys.exit(1)

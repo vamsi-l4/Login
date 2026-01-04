@@ -28,6 +28,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-zb*_a5z2*o4te_=_qqj%h!wkqo
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 AUTH_USER_MODEL = "accounts.User"
 
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 ALLOWED_HOSTS = [
     "login-m2o6.onrender.com",
     "login-nu-lake.vercel.app",
