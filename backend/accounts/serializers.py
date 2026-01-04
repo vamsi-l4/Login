@@ -22,17 +22,20 @@ class SignupSerializer(serializers.ModelSerializer):
         name = validated_data.pop("name")
         password = validated_data.pop("password")
 
-        user = User.objects.create(
-            username=name,
-            email=validated_data["email"],
-        )
-        user.set_password(password)
+        try:
+            user = User.objects.create(
+                username=name,
+                email=validated_data["email"],
+            )
+            user.set_password(password)
 
-        user.otp = str(random.randint(100000, 999999))
-        user.otp_created_at = timezone.now()
-        user.save()
+            user.otp = str(random.randint(100000, 999999))
+            user.otp_created_at = timezone.now()
+            user.save()
 
-        return user
+            return user
+        except IntegrityError:
+            raise serializers.ValidationError("A user with this email or name already exists.")
 
 
 class EmailVerificationSerializer(serializers.Serializer):
