@@ -8,11 +8,12 @@ import random
 from datetime import timedelta
 
 class SignupSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='username')
     password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = ['name', 'email', 'password']
 
 
 
