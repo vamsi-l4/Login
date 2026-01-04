@@ -33,9 +33,11 @@ def api_root(request):
     })
 
 def favicon(request):
-    # Return empty response for favicon requests
+    # Return a simple transparent favicon
     from django.http import HttpResponse
-    return HttpResponse(status=204)
+    # 1x1 transparent GIF
+    favicon_data = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B'
+    return HttpResponse(favicon_data, content_type='image/gif')
 
 urlpatterns = [
     path('', api_root, name='api-root'),
