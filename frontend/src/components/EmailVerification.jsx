@@ -10,7 +10,7 @@ const EmailVerification = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/api/accounts/verify-email/', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/accounts/verify-email/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp }),
