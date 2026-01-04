@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.utils import timezone
+from django.db import IntegrityError
 from .models import User
 import random
 from datetime import timedelta
@@ -11,6 +12,11 @@ class SignupSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["name", "email", "password"]
+
+    def validate_name(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("A user with this name already exists.")
+        return value
 
     def create(self, validated_data):
         name = validated_data.pop("name")

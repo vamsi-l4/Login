@@ -1,3 +1,7 @@
+- [x] Fix 500 error on signup by adding validation for unique username and handling IntegrityError
 - [ ] Modify Signup.jsx to store email in localStorage after successful signup
 - [ ] Modify EmailVerification.jsx to retrieve email from localStorage and send both email and otp in the request
 - [ ] Rename 'code' to 'otp' in EmailVerification.jsx to match backend serializer
+- [ ] Set DEBUG=False in production environment variables
+- [ ] Ensure migrations are run on deployment (e.g., set build command on Render: python manage.py migrate)
+- [ ] Set SECRET_KEY environment variable in production
