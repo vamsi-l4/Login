@@ -1,0 +1,3 @@
+- [ ] Modify Signup.jsx to store email in localStorage after successful signup
+- [ ] Modify EmailVerification.jsx to retrieve email from localStorage and send both email and otp in the request
+- [ ] Rename 'code' to 'otp' in EmailVerification.jsx to match backend serializer
