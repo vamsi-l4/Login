@@ -1,7 +1,10 @@
+import logging
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import SignupSerializer, EmailVerificationSerializer, LoginSerializer, OTPVerificationSerializer
+
+logger = logging.getLogger(__name__)
 
 class SignupView(APIView):
     def post(self, request):
