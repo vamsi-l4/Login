@@ -31,13 +31,13 @@ class SignupSerializer(serializers.ModelSerializer):
             user.save()
 
             # Send OTP email
-            send_mail(
-                'Your OTP Code',
-                f'Your OTP code is {user.otp}. It expires in 10 minutes.',
-                settings.DEFAULT_FROM_EMAIL,
-                [user.email],
-                fail_silently=True,
-            )
+            # send_mail(
+            #     'Your OTP Code',
+            #     f'Your OTP code is {user.otp}. It expires in 10 minutes.',
+            #     settings.DEFAULT_FROM_EMAIL,
+            #     [user.email],
+            #     fail_silently=True,
+            # )
 
             return user
         except IntegrityError as e:
@@ -84,13 +84,13 @@ class LoginSerializer(serializers.Serializer):
         user.save()
 
         # Send OTP email
-        send_mail(
-            'Your Login OTP Code',
-            f'Your login OTP code is {user.otp}. It expires in 10 minutes.',
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email],
-            fail_silently=True,
-        )
+        # send_mail(
+        #     'Your Login OTP Code',
+        #     f'Your login OTP code is {user.otp}. It expires in 10 minutes.',
+        #     settings.DEFAULT_FROM_EMAIL,
+        #     [user.email],
+        #     fail_silently=True,
+        # )
 
         return data
 
