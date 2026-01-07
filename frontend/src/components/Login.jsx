@@ -19,10 +19,19 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
       if (response.ok) {
+        localStorage.setItem('email', formData.email);
         navigate('/otp');
       } else {
         const data = await response.json();
-        setError(data.error || 'Login failed');
+        let errorMsg = 'Login failed';
+        if (data.non_field_errors && data.non_field_errors.length > 0) {
+          errorMsg = data.non_field_errors[0];
+        } else if (data.email && data.email.length > 0) {
+          errorMsg = data.email[0];
+        } else if (data.password && data.password.length > 0) {
+          errorMsg = data.password[0];
+        }
+        setError(errorMsg);
       }
     } catch (err) {
       setError('Network error');

@@ -101,7 +101,23 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = []
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,
+        }
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 
 # Internationalization
@@ -137,3 +153,4 @@ CORS_ALLOWED_ORIGINS = [
     'https://login-nu-lake.vercel.app',  # Your deployed Vercel frontend
     'https://login-m2o6.onrender.com',  # Your deployed Render backend
 ]
+CORS_ALLOW_ALL_ORIGINS = True  # Temporarily allow all for testing

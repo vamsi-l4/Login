@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const OTP = () => {
-  const [formData, setFormData] = useState({ email: '', otp: '' });
+  const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const email = localStorage.getItem('email');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,13 +17,21 @@ const OTP = () => {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/accounts/verify-otp/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ email, otp }),
       });
       if (response.ok) {
         navigate('/success');
       } else {
         const data = await response.json();
-        setError(data.error || 'OTP verification failed');
+        let errorMsg = 'OTP verification failed';
+        if (data.non_field_errors && data.non_field_errors.length > 0) {
+          errorMsg = data.non_field_errors[0];
+        } else if (data.email && data.email.length > 0) {
+          errorMsg = data.email[0];
+        } else if (data.otp && data.otp.length > 0) {
+          errorMsg = data.otp[0];
+        }
+        setError(errorMsg);
       }
     } catch (err) {
       setError('Network error');
@@ -39,20 +48,17 @@ const OTP = () => {
             <label className="block text-gray-700">Email</label>
             <input
               type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
               className="w-full px-3 py-2 border rounded"
-              required
+              readOnly
             />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">OTP</label>
             <input
               type="text"
-              name="otp"
-              value={formData.otp}
-              onChange={handleChange}
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
               className="w-full px-3 py-2 border rounded"
               required
             />

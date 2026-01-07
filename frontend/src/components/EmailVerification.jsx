@@ -19,7 +19,15 @@ const EmailVerification = () => {
         navigate('/login');
       } else {
         const data = await response.json();
-        setError(data.error || 'Verification failed');
+        let errorMsg = 'Verification failed';
+        if (data.non_field_errors && data.non_field_errors.length > 0) {
+          errorMsg = data.non_field_errors[0];
+        } else if (data.email && data.email.length > 0) {
+          errorMsg = data.email[0];
+        } else if (data.otp && data.otp.length > 0) {
+          errorMsg = data.otp[0];
+        }
+        setError(errorMsg);
       }
     } catch (err) {
       setError('Network error');
