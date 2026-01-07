@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -23,7 +23,17 @@ const Signup = () => {
         navigate('/verify-email');
       } else {
         const data = await response.json();
-        setError(data.error || 'Signup failed');
+        let errorMsg = 'Signup failed';
+        if (data.non_field_errors && data.non_field_errors.length > 0) {
+          errorMsg = data.non_field_errors[0];
+        } else if (data.name && data.name.length > 0) {
+          errorMsg = data.name[0];
+        } else if (data.email && data.email.length > 0) {
+          errorMsg = data.email[0];
+        } else if (data.password && data.password.length > 0) {
+          errorMsg = data.password[0];
+        }
+        setError(errorMsg);
       }
     } catch (err) {
       setError('Network error');
@@ -40,8 +50,8 @@ const Signup = () => {
             <label className="block text-gray-700">Name</label>
             <input
               type="text"
-              name="username"
-              value={formData.username}
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded"
               required
