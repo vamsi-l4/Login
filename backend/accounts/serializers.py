@@ -1,22 +1,19 @@
 from rest_framework import serializers
 from django.utils import timezone
 from django.db import IntegrityError
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import User
 import random
 from datetime import timedelta
 
 class SignupSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(write_only=True)
+    name = serializers.CharField(write_only=True, max_length=150)
     password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
         fields = ["name", "email", "password"]
-
-    def validate_name(self, value):
-        if User.objects.filter(username=value).exists():
-            raise serializers.ValidationError("A user with this name already exists.")
-        return value
 
     def create(self, validated_data):
         name = validated_data.pop("name")
@@ -33,9 +30,28 @@ class SignupSerializer(serializers.ModelSerializer):
             user.otp_created_at = timezone.now()
             user.save()
 
+            # Send OTP email
+            try:
+                send_mail(
+                    'Your OTP Code',
+                    f'Your OTP code is {user.otp}. It expires in 10 minutes.',
+                    settings.DEFAULT_FROM_EMAIL,
+                    [user.email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                # Log the error, but don't fail the signup
+                print(f"Failed to send email: {e}")
+                # Optionally, you can raise an error or handle differently
+
             return user
-        except IntegrityError:
-            raise serializers.ValidationError("A user with this email or name already exists.")
+        except IntegrityError as e:
+            if 'email' in str(e):
+                raise serializers.ValidationError("A user with this email already exists.")
+            elif 'username' in str(e):
+                raise serializers.ValidationError("A user with this name already exists.")
+            else:
+                raise serializers.ValidationError("A user with this email or name already exists.")
 
 
 class EmailVerificationSerializer(serializers.Serializer):
