@@ -1,8 +1,7 @@
-- [ ] Fix 500 error on signup by adding validation for unique username and handling IntegrityError. I have applied the fix and added tests. Please run the tests to verify the fix.
-- [ ] To run the tests, navigate to the `backend` directory and run the command `python manage.py test accounts`.
-- [ ] Modify Signup.jsx to store email in localStorage after successful signup
-- [ ] Modify EmailVerification.jsx to retrieve email from localStorage and send both email and otp in the request
-- [ ] Rename 'code' to 'otp' in EmailVerification.jsx to match backend serializer
-- [ ] Set DEBUG=False in production environment variables
-- [ ] Ensure migrations are run on deployment (e.g., set build command on Render: python manage.py migrate)
-- [ ] Set SECRET_KEY environment variable in production
+# TODO: Implement Clerk Authentication in React App
+
+- [x] Install @clerk/clerk-react package in frontend
+- [x] Create .env file in frontend with Clerk publishable key placeholder
+- [x] Update src/main.jsx to import publishable key and wrap app with ClerkProvider
+- [x] Update src/App.jsx to add header with Clerk components (SignedIn, SignedOut, SignInButton, UserButton)
+- [x] Run npm run dev to test the integration

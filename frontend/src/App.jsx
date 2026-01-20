@@ -1,21 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Signup from './components/Signup';
-import EmailVerification from './components/EmailVerification';
-import Login from './components/Login';
-import OTP from './components/OTP';
-import Success from './components/Success';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Signup />} />
-        <Route path="/verify-email" element={<EmailVerification />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/otp" element={<OTP />} />
-        <Route path="/success" element={<Success />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <SignedIn>
+                <Dashboard />
+              </SignedIn>
+
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
