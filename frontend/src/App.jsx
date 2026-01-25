@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import Dashboard from "./components/Dashboard";
+import ClerkLogin from "./components/ClerkLogin";
+import ClerkSignup from "./components/ClerkSignup";
+import ClerkOTP from "./components/ClerkOTP";
 
 function App() {
   return (
@@ -13,13 +16,15 @@ function App() {
               <SignedIn>
                 <Dashboard />
               </SignedIn>
-
               <SignedOut>
-                <RedirectToSignIn />
+                <ClerkLogin />
               </SignedOut>
             </>
           }
         />
+        <Route path="/login" element={<ClerkLogin />} />
+        <Route path="/verify-otp" element={<ClerkOTP />} />
+        <Route path="/signup" element={<ClerkSignup />} />
       </Routes>
     </BrowserRouter>
   );

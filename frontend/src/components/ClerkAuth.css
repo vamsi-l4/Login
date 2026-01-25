@@ -1,0 +1,364 @@
+/* 🌌 Container and Background */
+.auth-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Layer 1 */
+  filter: brightness(0.4);
+}
+
+/* New wrapper to position the layered elements correctly */
+.auth-form-wrapper {
+  position: relative;
+  top: 35px; /* Adjust this to move the entire block up/down */
+  width: 380px;
+  height: 600px; /* Give it a fixed height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 💎 Renamed .glass-card to .glass-card-background for the visual box */
+.glass-card-background {
+  position: absolute;
+  width: 100%;
+  height: 69%;
+  backdrop-filter: blur(14px);
+  background: rgba(180, 13, 13, 0.05);
+  border: 2px solid rgba(245, 13, 13, 0.2);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(214, 26, 26, 0.25);
+  z-index: 2; /* Layer 2 */
+}
+
+.silhouette {
+  position: absolute;
+  right: -140px; /* Position relative to the wrapper */
+  top: -64px;
+  width: 600px; /* Adjusted size */
+  height: auto;
+  opacity: 0.9;
+  z-index: 3; /* Layer 3 */
+  pointer-events: none; /* Allows clicks to go through it */
+  filter: drop-shadow(0 0 20px rgba(245, 13, 13, 0.8));
+  /* Remove background properties, the image is now transparent */
+}
+
+/* New class for the form content itself */
+.form-content {
+  position: relative; /* It's a flex item, not absolute */
+  width: 100%;
+  height: 100%;
+  padding: 19px;
+  text-align: center;
+  color: white;
+  z-index: 4; /* Layer 4 - on top of everything */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.form-content h2 {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(247, 8, 8, 0.2);
+  padding-bottom: 8px;
+  font-size: 1.5rem;
+}
+
+.logo-text {
+  color: red;
+}
+
+.verification-info {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 5px;
+}
+
+.email-display {
+  font-size: 0.85rem;
+  color: #ff6666;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.resend-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.back-text {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.back-link {
+  color: red;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  color: #ff4d4d;
+  text-decoration: underline;
+}
+
+.error.success {
+  color: #4dff4d;
+  animation: successPulse 0.5s ease;
+}
+
+@keyframes successPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* 📧 Input Fields (no z-index needed, they are inside form-content) */
+.input-group {
+  position: relative;
+  width: 100%;
+  right: 3%;
+  backdrop-filter: blur(5px);
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 10px 10px 50px;
+  background: rgba(241, 14, 14, 0.1);
+  border: 1px solid rgba(245, 13, 13, 0.2);
+  border-radius: 8px;
+  outline: none;
+  color: white;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.input-group input:focus {
+  border-color: rgba(245, 13, 13, 0.5);
+  background: rgba(241, 14, 14, 0.2);
+  box-shadow: 0 0 10px rgba(245, 13, 13, 0.2);
+}
+
+.input-group input.error {
+  border-color: #ff4d4d;
+  background: rgba(255, 77, 77, 0.1);
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: red;
+  pointer-events: none;
+}
+
+/* 👁️ Password Toggle Icon */
+.toggle-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: red;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-icon:hover {
+  opacity: 0.8;
+}
+
+/* ✅ Options Row */
+.options-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: red;
+}
+
+.remember-me span {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.forgot-password {
+  color: rgb(232, 13, 13);
+  cursor: pointer;
+  padding: 10px;
+  backdrop-filter: blur(5px);
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.forgot-password:hover {
+  color: #ff4d4d;
+  text-decoration: underline;
+}
+
+/* 🔴 Button */
+.form-content button {
+  width: 90%;
+  padding: 10px 25px;
+  border-color: transparent;
+  border-radius: 8px;
+  background-color: red;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  backdrop-filter: blur(5px);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.form-content button:hover:not(:disabled) {
+  background: darkred;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+}
+
+.form-content button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 🔻 Error */
+.error {
+  color: #ff4d4d;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Field error message */
+.field-error {
+  color: #ff4d4d;
+  font-size: 0.75rem;
+  margin-top: 3px;
+  margin-bottom: 8px;
+  text-align: left;
+  padding-left: 15px;
+}
+
+/* 👣 Footer Text */
+.footer-text {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-text span {
+  color: red;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.footer-text span:hover {
+  color: #ff4d4d;
+  text-decoration: underline;
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .auth-form-wrapper {
+    width: 85%;
+    top: 20px;
+    height: auto;
+    max-height: 85vh;
+  }
+
+  .form-content {
+    padding: 15px;
+  }
+
+  .form-content h2 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  .silhouette {
+    display: none;
+  }
+
+  .options-row {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .form-content button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form-wrapper {
+    width: 95%;
+  }
+
+  .form-content {
+    padding: 12px;
+  }
+
+  .form-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .input-group input {
+    padding: 8px 8px 8px 40px;
+    font-size: 13px;
+  }
+
+  .input-icon {
+    left: 10px;
+  }
+
+  .toggle-icon {
+    right: 10px;
+  }
+}
